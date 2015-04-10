@@ -162,8 +162,9 @@ public class Starter extends JFrame {
     public void updateOutput(ArrayList<String> outputArrayList) {
         output.setText(null);
         StringBuilder sb = new StringBuilder();
+        int index = 0;
         for (String line : outputArrayList) {
-            sb.append(line);
+            sb.append("Case #" + ++index + ": " + line);
             sb.append("\n");
         }
         sb.setLength(sb.length() - 1);
