@@ -41,6 +41,15 @@ public class Starter extends JFrame {
         add(textPanel(), BorderLayout.CENTER);
     }
 
+    public void process(){
+        File file = getFile();
+        ArrayList<String> input = readFile(file);
+
+        updateInput(input);
+        decode(input);
+        displayAndSave(input);
+    }
+
     public void decode(ArrayList<String> inputArrayList){
 
     }
@@ -134,15 +143,6 @@ public class Starter extends JFrame {
         return panel;
     }
 
-    public void process(){
-        File file = getFile();
-        ArrayList<String> input = readFile(file);
-
-        updateInput(input);
-        decode(input);
-        displayAndSave(input);
-    }
-
     public void displayAndSave(ArrayList<String> output) {
         updateOutput(output);
         save.setEnabled(true);
@@ -150,18 +150,24 @@ public class Starter extends JFrame {
 
     public void updateInput(ArrayList<String> inputArrayList) {
         input.setText(null);
+        StringBuilder sb = new StringBuilder();
         for (String line : inputArrayList) {
-            input.append(line);
-            input.append("\n");
+            sb.append(line);
+            sb.append("\n");
         }
+        sb.setLength(sb.length()-1);
+        input.append(sb.toString());
     }
 
     public void updateOutput(ArrayList<String> outputArrayList) {
         output.setText(null);
+        StringBuilder sb = new StringBuilder();
         for (String line : outputArrayList) {
-            output.append(line);
-            output.append("\n");
+            sb.append(line);
+            sb.append("\n");
         }
+        sb.setLength(sb.length() - 1);
+        output.append(sb.toString());
     }
 
     public File getFile(){
@@ -189,6 +195,7 @@ public class Starter extends JFrame {
             while((line = bufferedReader.readLine()) != null) {
                 input.add(line);
             }
+            System.out.println(input);
             return input;
         } catch (FileNotFoundException e) {
             System.out.println("Problem reading file.");
@@ -204,8 +211,9 @@ public class Starter extends JFrame {
 
         FileWriter fw = null;
         try {
-            fw = new FileWriter(file.getAbsoluteFile(), true);
+            fw = new FileWriter(file.getAbsoluteFile(), false);
             output.write(fw);
+            fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
