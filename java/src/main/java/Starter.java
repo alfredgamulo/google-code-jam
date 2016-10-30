@@ -1,14 +1,17 @@
 /**
  * Created by Alfred on 4/9/2015.
  */
+
 import util.TextLineNumber;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Starter extends JFrame {
 
@@ -46,12 +49,84 @@ public class Starter extends JFrame {
         ArrayList<String> input = readFile(file);
 
         updateInput(input);
-        decode(input);
-        displayAndSave(input);
+        ArrayList<String> output = makeitdo(input);
+        displayAndSave(output);
     }
 
-    public void decode(ArrayList<String> inputArrayList){
+    public ArrayList<String> makeitdo(ArrayList<String> inputArrayList) {
+        ArrayList<String> output = new ArrayList<>();
 
+        int t = Integer.parseInt(inputArrayList.remove(0));
+
+        while(t > 0) {
+            System.out.println("Trial: " + t);
+            int m = 0;
+            int D = Integer.parseInt(inputArrayList.remove(0));
+            String[] line = inputArrayList.remove(0).split(" ");
+            ArrayList<Integer> P = new ArrayList<Integer>(line.length);
+            for (int i = 0; i < line.length; i++) {
+                P.add(Integer.parseInt(line[i]));
+            }
+
+            Collections.sort(P);
+
+            int sum = P.stream().mapToInt(Integer::intValue).sum();
+
+            int mode = findMode(P);
+
+
+            do {
+                int p = P.remove(P.size() - 1);
+                p = p / 2 + p % 2;
+                P.add(p);
+                P.add(p);
+                Collections.sort(P);
+                m++;
+            }while (P.get(P.size() - 1) > mode);
+
+            int newMode = findMode(P);
+//            if (P.get(P.size() - 1) > newMode) {
+//                m += P.get(P.size() - 1);
+//            } else {
+//                m += newMode;
+//            }
+            m += newMode;
+
+            output.add(mode+" " + newMode +" "+P.get(P.size() - 1) +" "+m);
+            t--;
+        }
+
+
+        return output;
+    }
+
+    public int findMode(ArrayList<Integer> list) {
+        int maxValue = -1;
+        int maxCount = 0;
+        for(int i = 0; i < list.size(); i++) {
+            // count number of times nums[i] is in array
+            int count = 0;
+            for(int j = 0; j < list.size(); j++) {
+                if(list.get(j) == list.get(i)) {
+                    count++;
+                }
+            }
+
+            // remember the highest count we have seen
+            if(count >= maxCount) {
+                maxValue = list.get(i);
+                maxCount = count;
+            }
+        }
+        if (maxCount == 1) {
+//            if (list.size() == 1) {
+//                return list.get(0);
+//            } else {
+//                return list.get(list.size() - 2);
+//            }
+            return list.get(list.size() - 1);
+        }
+        return maxValue;
     }
 
     public JPanel buttonPanel(){
