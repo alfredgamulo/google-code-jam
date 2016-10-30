@@ -1,1 +1,9 @@
+# Google Code Jam (Lua)
+
+## Command to run
+
 $ lua main.lua < B-large-practice.in  > out
+
+## URLs to word problems
+
+https://code.google.com/codejam/contest/5254486/dashboard
