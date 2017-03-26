@@ -25,4 +25,28 @@ function _M.isPrime(number)
     return true
 end
 
+function _M.prime_factor(num)
+    local i = 2;
+    local factors = {};
+
+    if not num or num < 1 then
+        print('your input must be postive!')
+    end
+
+    if num and num == 1 then
+        factors[1] = 1
+        return factors
+    end
+
+    while num and num > 1 do
+        while num % i == 0 do
+            factors[#factors + 1] = i
+            num = num / i
+        end
+        i = i + 1
+    end
+
+    return factors
+end
+
 return _M
