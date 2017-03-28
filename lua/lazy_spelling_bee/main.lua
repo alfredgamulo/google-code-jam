@@ -5,12 +5,12 @@
 --  CODEJAM
 --  ===============================
  ]]
- 
+
 --[[localize functions]]
 
-local cjson = require "cjson"
-local cjson_encode = cjson.encode
-local cjson_decode = cjson.decode
+--local cjson = require "cjson"
+--local cjson_encode = cjson.encode
+--local cjson_decode = cjson.decode
 local print = print
 local pairs = pairs
 local table = table
@@ -29,32 +29,32 @@ end
 local function do_jam()
   str = rtrim(io_read())
   len = string_len(str)
-  if (len == 1) then 
+  if (len == 1) then
     return 1
   end
-  if (len == 2) then 
-    if (str:sub(1,1) == str:sub(2,2)) then 
+  if (len == 2) then
+    if (str:sub(1,1) == str:sub(2,2)) then
       return 1
-    else 
+    else
       return 4
     end
   end
-  
+
   ans = 1
-  
-  if (str:sub(1,1)~=str:sub(2,2)) then 
+
+  if (str:sub(1,1)~=str:sub(2,2)) then
     ans=(ans*2)%mod
   end
-  if (str:sub(-1,-1)~=str:sub(-2,-2)) then 
+  if (str:sub(-1,-1)~=str:sub(-2,-2)) then
     ans=(ans*2)%mod
   end
-  
+
   for i=2, #str-1 do
     c = 1;
-    if (str:sub(i,i) ~= str:sub(i-1,i-1)) then 
+    if (str:sub(i,i) ~= str:sub(i-1,i-1)) then
       c=c+1
     end
-    if ((str:sub(i+1,i+1) ~= str:sub(i-1,i-1)) and (str:sub(i,i) ~= str:sub(i+1,i+1))) then 
+    if ((str:sub(i+1,i+1) ~= str:sub(i-1,i-1)) and (str:sub(i,i) ~= str:sub(i+1,i+1))) then
       c=c+1
     end
     ans=(ans*c)%mod
