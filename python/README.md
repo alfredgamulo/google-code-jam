@@ -3,7 +3,9 @@
 ## Command to run
 
 $ make install # enable venv
+
 $ . bin/activate
+
 $ python main.py < B-large-practice.in  > out
 
 ## URLs to word problems
